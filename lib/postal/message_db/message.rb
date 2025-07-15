@@ -90,9 +90,14 @@ module Postal
 
         self.subject = headers["subject"]&.last.to_s[0, 200]
         self.message_id = headers["message-id"]&.last
-        return unless message_id
+        
+		
+		if message_id.nil? || message_id.strip.empty?
+		  self.message_id = "<#{SecureRandom.uuid}@#{Postal::Config.dns.return_path_domain}>"
+		end
 
         self.message_id = message_id.gsub(/.*</, "").gsub(/>.*/, "").strip
+		return unless message_id
       end
 
       #
