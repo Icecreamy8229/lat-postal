@@ -422,8 +422,8 @@ module Postal
           headers << dkim.dkim_header
         end
         headers << "X-Postal-MsgID: #{token}"
-        headers << "Message-ID: #{self.message_id}"
-		puts "Added outgoing header #{self.message_id}"
+        headers << "Message-ID: <#{self.message_id}>"
+		puts "Added outgoing header <#{self.message_id}>"
         append_headers(*headers)
       end
 
