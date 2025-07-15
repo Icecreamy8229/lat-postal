@@ -7,7 +7,7 @@ module Postal
       class NotFound < Postal::Error
       end
 	  
-	  before_save : ensure_message_id
+	  before_save :ensure_message_id
 	  
 	  def ensure_message_id
 	    if self.message_id.blank?
