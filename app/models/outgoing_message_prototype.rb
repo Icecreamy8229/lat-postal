@@ -145,6 +145,12 @@ class OutgoingMessagePrototype
         end
       end
     end
+	
+	if message_id.nil?
+	  message_id = "<#{SecureRandom.uuid}@#{Postal::Config.dns.return_path_domain}>"
+	end
+	  
+	
     @errors
   end
 
@@ -178,7 +184,7 @@ class OutgoingMessagePrototype
         }
       end
       mail.header["Received"] = ReceivedHeader.generate(@server, @source_type, @ip, :http)
-      mail.message_id = "<#{@message_id}>"
+      mail.message_id = "<#{@message_id}@#{Postal::Config.dns.return_path_domain}>"
       mail.to_s
     end
   end
