@@ -6,6 +6,14 @@ module Postal
 
       class NotFound < Postal::Error
       end
+	  
+	  before_save : ensure_message_id
+	  
+	  def ensure_message_id
+	    if self.message_id.blank?
+          self.message_id = "<#{SecureRandom.uuid}@#{Postal::Config.dns.return_path_domain}>"
+        end
+      end
 
       def self.find_one(database, query)
         query = { id: query.to_i } if query.is_a?(Integer)
